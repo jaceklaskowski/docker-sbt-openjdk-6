@@ -1,5 +1,5 @@
-Build sbt using Docker
-==============
+Docker image for sbt 0.13.8 on OpenJDK 6
+==
 
 The project contains a **Dockerfile** to have [sbt](http://www.scala-sbt.org/) **0.13.8** on **OpenJDK 6** inside a [Docker](https://www.docker.com/) container. The version of Java is crucial as the official builds of sbt require this particular version of Java, namely **6**.
 
@@ -54,6 +54,26 @@ Latest version:
         ➜  docker-builds-sbt git:(master) ✗ $(boot2docker shellinit)
 
 1. `docker build -t docker-sbt-openjdk-6:0.13.8 .`
+
+        ➜  docker-sbt-openjdk-6  docker build -t docker-sbt-openjdk-6:0.13.8 .
+        Sending build context to Docker daemon 18.43 kB
+        Sending build context to Docker daemon
+        Step 0 : FROM java:6
+         ---> 999cc805d223
+        Step 1 : MAINTAINER Jacek Laskowski <jacek@japila.pl>
+        ...
+        [info] This is sbt 0.13.8
+        [info] The current project is {file:/}root 0.1-SNAPSHOT
+        [info] The current project is built against Scala 2.10.4
+        [info] Available Plugins: sbt.plugins.IvyPlugin, sbt.plugins.JvmPlugin, sbt.plugins.CorePlugin, sbt.plugins.JUnitXmlReportPlugin
+        [info] sbt, sbt plugins, and build definitions are using Scala 2.10.4
+         ---> 7288e5d87828
+        Removing intermediate container 9a489a8e2bb8
+        Step 10 : CMD $SBT_SCRIPT
+         ---> Running in 89fd0ce7e71e
+         ---> 3248a273e5ad
+        Removing intermediate container 89fd0ce7e71e
+        Successfully built 3248a273e5ad
 
 ## Cleanup (to build the image once more)
 
