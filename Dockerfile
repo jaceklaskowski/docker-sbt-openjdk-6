@@ -10,11 +10,14 @@
 FROM java:6
 MAINTAINER Jacek Laskowski <jacek@japila.pl>
 
-LABEL Description="Image to have sbt on Java 6" Vendor="Japila Software" Version="0.1"
-
-ENV SBT_VERSION 0.13.8
-ENV BUILD_PATH  /tmp/
+ENV SBT_VERSION 0.13.9
+ENV BUILD_PATH  /tmp
 ENV SBT_SCRIPT  $BUILD_PATH/sbt
+ENV PROJECT_DIR $BUILD_PATH/scala-project
+
+LABEL description="Image to have sbt on Java 6" \
+      vendor="Japila Software" \
+      version="$SBT_VERSION"
 
 RUN curl -Lo $BUILD_PATH/sbt-launch.jar \
   https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/$SBT_VERSION/sbt-launch.jar \
@@ -22,8 +25,8 @@ RUN curl -Lo $BUILD_PATH/sbt-launch.jar \
 
 ADD sbt $SBT_SCRIPT
 RUN chmod +x $SBT_SCRIPT
-
-# Downloads all the necessary dependencies of sbt
 RUN $SBT_SCRIPT about
 
-CMD $SBT_SCRIPT
+WORKDIR $PROJECT_DIR
+
+ENTRYPOINT $SBT_SCRIPT
